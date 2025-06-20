@@ -4,7 +4,7 @@ let request = (obj) => {
         xhr.open(obj.method || "GET", obj.url);
         xhr.onload = () => {
             if (xhr.status >= 200 && xhr.status < 300) {
-                resolve((xhr.response));
+                resolve(JSON.parse(xhr.response));
             } else {
                 reject(xhr.statusText);
             }
@@ -17,12 +17,11 @@ let request = (obj) => {
 
 let object = {
     url: 'https://jsonplaceholder.typicode.com/todos',
-    method: 'get',
+    method: 'GET',
     body: null
 }
 
 let todoList = document.getElementById('todoList');
-
 
 async function doIt() {
     try {
@@ -30,7 +29,7 @@ async function doIt() {
         if (results) {
             results.forEach(todo => {
                 let li = document.createElement('li');
-                li.textContent = `${todo.id}: ${todo.title} (${todo.completed ? "Completed" : "Not Completed"})`; // Display status
+                li.textContent = `${todo.id}: ${todo.title} (${todo.completed ? "Completed" : "Not Completed"})`;
                 todoList.appendChild(li);
             });
         }
